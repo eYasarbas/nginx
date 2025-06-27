@@ -12,8 +12,8 @@ RUN openssl dhparam -out dhparam.pem 2048
 # Generate private key
 RUN openssl genrsa -out privkey.pem 2048
 
-# Generate CSR
-RUN openssl req -new -key privkey.pem -out cert.csr -subj "/CN=localhost"
+# Generate CSR with correct IP
+RUN openssl req -new -key privkey.pem -out cert.csr -subj "/C=TR/ST=Istanbul/L=Istanbul/O=QRProject/OU=IT/CN=217.18.209.111"
 
 # Generate self-signed certificate
 RUN openssl x509 -req -days 365 -in cert.csr -signkey privkey.pem -out cert.pem
