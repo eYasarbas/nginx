@@ -1,14 +1,12 @@
-FROM nginx:alpine
+# Base image olarak Nginx'in resmi imajını kullan
+FROM nginx:latest
 
-# Default konfigürasyonu kaldır
-RUN rm -f /etc/nginx/conf.d/default.conf
-
-# Bizim konfigürasyonumuzu kopyala
+# Sertifikalar ve config dosyasını ekleyelim
 COPY nginx.conf /etc/nginx/nginx.conf
+COPY certs /etc/nginx/certs/
 
-RUN mkdir -p /var/log/nginx \
- && chown -R nginx:nginx /var/log/nginx
+# Portları expose edelim
+EXPOSE 3000 8443
 
-EXPOSE 80
-
+# Nginx başlat
 CMD ["nginx", "-g", "daemon off;"]
