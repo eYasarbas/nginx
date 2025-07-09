@@ -1,12 +1,10 @@
-# Base image olarak Nginx'in resmi imajını kullan
 FROM nginx:latest
 
-# Sertifikalar ve config dosyasını ekleyelim
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY certs /etc/nginx/certs/
+COPY certs      /etc/nginx/certs
+# access ve error logları container içinde /var/log/nginx altında
+VOLUME ["/var/log/nginx"]
 
-# Portları expose edelim
-EXPOSE 3000 8443
+EXPOSE 80 443
 
-# Nginx başlat
 CMD ["nginx", "-g", "daemon off;"]
